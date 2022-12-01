@@ -26,7 +26,7 @@ SECRET_KEY = os.getenv("SECRET_KEY") or secrets.token_hex(32)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = os.getenv("DEBUG") == "1"
 
 ALLOWED_HOSTS = []
 
@@ -79,8 +79,12 @@ WSGI_APPLICATION = "app.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DB_NAME") or "postgres",
+        "USER": os.getenv("DB_USER") or "postgres",
+        "PASSWORD": os.getenv("DB_PASSWORD") or "postgres",
+        "HOST": os.getenv("DB_HOST") or "localhost",
+        "PORT": os.getenv("DB_PORT") or "5555",
     }
 }
 
@@ -120,6 +124,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

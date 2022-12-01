@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  db:
+    image: postgis/postgis
+    environment:
+      - POSTGRES_PASSWORD=polygon1234
+      - POSTGRES_USER=polygon
+      - POSTGRES_DB=polygon
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - .nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - static:/usr/src/app/static/
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+
+  api:
+    build: .
+    command: ["gunicorn", "app.wsgi", "--bind", "0.0.0.0:8000"]
+    volumes:
+      - static:/usr/src/app/static/
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=polygon
+      - DB_PASSWORD=polygon1234
+      - DB_NAME=polygon
+
+volumes:
+  static:
