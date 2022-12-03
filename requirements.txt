@@ -10,5 +10,3 @@ djangorestframework
 djangorestframework-gis
 drf-spectacular
 factory_boy
-
-django-stubs
