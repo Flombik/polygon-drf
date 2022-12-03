@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y wget netcat libpq-dev gcc && apt-get cl
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 
 COPY requirements.txt ./
+RUN sed -i -e 's/psycopg2-binary//g' requirements.txt
 RUN pip install --no-cache-dir gunicorn psycopg2
 RUN pip install --no-cache-dir -r requirements.txt
 
