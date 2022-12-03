@@ -6,11 +6,11 @@ on:
       - "main"
     paths:
       - ".github/workflows/python.lint-and-test.yml"
-      - "python/**"
+      - "app/**"
   pull_request:
     paths:
       - ".github/workflows/python.lint-and-test.yml"
-      - "python/**"
+      - "app/**"
 
 jobs:
   lint:
