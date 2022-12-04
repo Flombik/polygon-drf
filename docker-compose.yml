@@ -24,12 +24,8 @@ services:
       - static:/usr/src/app/static/
     depends_on:
       - db
-    environment:
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_USER=polygon
-      - DB_PASSWORD=polygon1234
-      - DB_NAME=polygon
+    env_file:
+      - .env
 
 volumes:
   static:
