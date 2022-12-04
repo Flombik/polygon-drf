@@ -25,7 +25,7 @@ jobs:
 
       - name: Build image
         run: |
-          docker-compose build
+          docker build -t ${{ env.APP_IMAGE }} --cache-from ${{ env.APP_IMAGE }} .
 
       - name: Push image
         run: |
@@ -64,7 +64,7 @@ jobs:
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
-          scp  -o StrictHostKeyChecking=no -r ./.env ./docker-compose.yml ubuntu@${{ secrets.REMOTE_INSTANCE_IP }}:/src
+          scp  -o StrictHostKeyChecking=no -r ./.env ./docker-compose.prod.yml ubuntu@${{ secrets.REMOTE_INSTANCE_IP }}:/src
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.REMOTE_INSTANCE_IP }} << 'ENDSSH'
             cd /src
             source .env
