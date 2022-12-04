@@ -18,7 +18,7 @@ class BaseModel(models.Model):
     objects = ActiveInstancesManager()
     objects_all = models.Manager()
 
-    def delete(self, hard=False, **kwargs):
+    def delete(self, hard=False, **kwargs):  # pylint: disable=arguments-differ
         if hard:
             super().delete(**kwargs)
         else:
