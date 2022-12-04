@@ -30,9 +30,9 @@ class ServiceAreaFilter(geo_filters.GeoFilterSet):
     @staticmethod
     def filter_point_intersects(queryset: "QuerySet[t.Any]", name: str, value: str):
         try:
-            (x, y) = (float(n) for n in value.split(","))
+            (x, y) = (float(n) for n in value.split(","))  # pylint: disable=invalid-name
         except ValueError:
-            raise ParseError("Invalid string supplied for parameter {0}".format(name))
+            raise ParseError(f"Invalid string supplied for parameter {name}")
 
         point = Point(x, y)
         queryset = queryset.filter(geo_info__intersects=point)

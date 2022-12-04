@@ -9,12 +9,14 @@ from .serializers import provider as provider_serializers, service_area as servi
 
 
 class ProviderViewSet(ModelViewSet):
+    # pylint: disable=too-many-ancestors
     queryset = provider_selectors.get_queryset()
     serializer_class = provider_serializers.ProviderSerializer
     permission_classes = [permissions.AllowAny]
 
 
 class ServiceAreaViewSet(ModelViewSet):
+    # pylint: disable=too-many-ancestors
     queryset = service_area_selectors.get_queryset()
     serializer_class = service_area_serializers.ServiceAreaSerializer
     permission_classes = [permissions.AllowAny]
