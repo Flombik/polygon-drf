@@ -17,11 +17,11 @@ from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-from polygon.urls import router as polygon_router
+from polygon.urls import urlpatterns as polygon_urlpatterns
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include(polygon_router.urls)),
+    path("api/", include(polygon_urlpatterns)),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/schema/swagger/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger"),
 ]

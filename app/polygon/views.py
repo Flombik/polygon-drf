@@ -1,6 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.exceptions import NotFound
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework_gis.pagination import GeoJsonPagination
 
 from .filters import service_area as service_area_filters
@@ -9,17 +10,36 @@ from .serializers import provider as provider_serializers, service_area as servi
 
 
 class ProviderViewSet(ModelViewSet):
-    # pylint: disable=too-many-ancestors
     queryset = provider_selectors.get_queryset()
     serializer_class = provider_serializers.ProviderSerializer
     permission_classes = [permissions.AllowAny]
 
 
-class ServiceAreaViewSet(ModelViewSet):
-    # pylint: disable=too-many-ancestors
-    queryset = service_area_selectors.get_queryset()
+class ServiceAreaConfigMixin:
     serializer_class = service_area_serializers.ServiceAreaSerializer
     permission_classes = [permissions.AllowAny]
     pagination_class = GeoJsonPagination
     filter_backends = [DjangoFilterBackend]
     filterset_class = service_area_filters.ServiceAreaFilter
+
+    def get_queryset(self):
+        queryset = service_area_selectors.get_queryset()
+
+        if (provider_pk := self.kwargs.get("provider_pk")) is not None:
+            try:
+                provider = provider_selectors.get_provider_by_id(provider_pk)
+            except provider_selectors.Provider.DoesNotExist:  # pylint: disable=no-member
+                raise NotFound
+
+            queryset = queryset.filter(provider=provider)
+
+        return queryset
+
+
+class ServiceAreaViewSet(ServiceAreaConfigMixin, ModelViewSet):
+    # TODO: fix nested creation problem
+    ...
+
+
+class ReadOnlyServiceAreaViewSet(ServiceAreaConfigMixin, ReadOnlyModelViewSet):
+    ...
