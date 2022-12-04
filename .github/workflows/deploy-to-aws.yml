@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - "main"
-      - "ci-deploy-to-aws-ec2"
 
 env:
   APP_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/app
