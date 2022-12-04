@@ -4,17 +4,25 @@ line-length = 120
 [tool.isort]
 profile = "black"
 
+[tool.pylint.main]
+ignore-paths = ["app/[^/]+/migrations"]
+
 [tool.pylint.format]
 max-line-length = 120
 
 [tool.pylint."messages control"]
 disable = [
-  "raw-checker-failed",
-  "bad-inline-option",
-  "locally-disabled",
-  "file-ignored",
-  "suppressed-message",
-  "useless-suppression",
-  "deprecated-pragma",
-  "use-symbolic-message-instead",
+    "raw-checker-failed",
+    "bad-inline-option",
+    "locally-disabled",
+    "file-ignored",
+    "suppressed-message",
+    "useless-suppression",
+    "deprecated-pragma",
+    "use-symbolic-message-instead",
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "raise-missing-from",
+    "too-few-public-methods",
 ]
