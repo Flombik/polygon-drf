@@ -7,4 +7,4 @@ if t.TYPE_CHECKING:
 
 
 def get_queryset() -> "QuerySet[ServiceArea]":
-    return ServiceArea.active_objects.order_by("id")
+    return ServiceArea.objects.order_by("id")

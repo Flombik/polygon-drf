@@ -7,4 +7,4 @@ if t.TYPE_CHECKING:
 
 
 def get_queryset() -> "QuerySet[Provider]":
-    return Provider.active_objects.order_by("id")
+    return Provider.objects.order_by("id")

@@ -9,4 +9,3 @@ class Provider(BaseModel):
     phone_number = models.CharField(max_length=15, null=True)
     language = models.CharField(max_length=2, null=True)
     currency = models.CharField(max_length=3, null=True)
-
