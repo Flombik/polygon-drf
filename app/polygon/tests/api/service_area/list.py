@@ -25,6 +25,7 @@ class ServiceAreaListTestCase(BaseAPIListTestCase):
 
     @classmethod
     def setUpTestData(cls) -> None:
+        # pylint: disable=duplicate-code
         cls.factory_class.create_batch(
             size=2,
             geo_info=MultiPolygon(

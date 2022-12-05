@@ -20,6 +20,7 @@ class ServiceAreaItemTestCase(BaseAPIItemTestCase):
 
     @classmethod
     def setUpTestData(cls) -> None:
+        # pylint: disable=duplicate-code
         cls.item = cls.factory_class.create(
             geo_info=MultiPolygon(
                 Polygon(
