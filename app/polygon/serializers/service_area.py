@@ -8,4 +8,5 @@ class ServiceAreaSerializer(GeoFeatureModelSerializer):
         model = ServiceArea
         geo_field = "geo_info"
 
-        fields = ["id", "name", "price"]
+        fields = ["id", "name", "price", "provider_id"]
+        read_only = ["provider_id"]

@@ -8,5 +8,6 @@ django
 django-filter
 djangorestframework
 djangorestframework-gis
+drf-nested-routers
 drf-spectacular
 factory_boy

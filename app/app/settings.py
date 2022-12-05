@@ -28,6 +28,7 @@ SECRET_KEY = os.getenv("SECRET_KEY") or secrets.token_hex(32)
 DEBUG = os.getenv("DEBUG") == "1"
 
 ALLOWED_HOSTS = [
+    "localhost",
     "3.69.178.101",
     "ec2-3-69-178-101.eu-central-1.compute.amazonaws.com",
 ]

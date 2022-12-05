@@ -25,4 +25,5 @@ disable = [
     "missing-function-docstring",
     "raise-missing-from",
     "too-few-public-methods",
+    "too-many-ancestors",
 ]
