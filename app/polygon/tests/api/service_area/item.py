@@ -1,7 +1,6 @@
 import typing as t
 
-from django.contrib.gis.geos import Polygon, MultiPolygon
-
+from django.contrib.gis.geos import MultiPolygon, Polygon
 from polygon.tests.api.base import BaseAPIItemTestCase
 from polygon.tests.api.utils import urljoin
 from polygon.tests.factories import ServiceAreaFactory

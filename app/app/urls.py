@@ -16,7 +16,6 @@ Including another URLconf
 from django.shortcuts import redirect
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
-
 from polygon.urls import urlpatterns as polygon_urlpatterns
 
 urlpatterns = [

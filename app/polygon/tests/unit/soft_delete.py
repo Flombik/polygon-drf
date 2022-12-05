@@ -1,5 +1,4 @@
 from django.test import TestCase
-
 from polygon.models import Provider
 from polygon.tests.factories import ProviderFactory
 
