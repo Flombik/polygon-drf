@@ -28,7 +28,7 @@ class ServiceAreaConfigMixin:
         if (provider_pk := self.kwargs.get("provider_pk")) is not None:
             try:
                 provider = provider_selectors.get_provider_by_id(provider_pk)
-            except provider_selectors.Provider.DoesNotExist:  # pylint: disable=no-member
+            except provider_selectors.Provider.DoesNotExist:
                 raise NotFound
 
             queryset = queryset.filter(provider=provider)
@@ -36,9 +36,14 @@ class ServiceAreaConfigMixin:
         return queryset
 
 
-class ServiceAreaViewSet(ServiceAreaConfigMixin, ModelViewSet):
-    # TODO: fix nested creation problem
-    ...
+class ServiceAreaNestedViewSet(ServiceAreaConfigMixin, ModelViewSet):
+    def perform_create(self, serializer):
+        try:
+            provider = provider_selectors.get_provider_by_id(self.kwargs.get("provider_pk"))
+        except provider_selectors.Provider.DoesNotExist:
+            raise NotFound
+
+        serializer.save(provider=provider)
 
 
 class ReadOnlyServiceAreaViewSet(ServiceAreaConfigMixin, ReadOnlyModelViewSet):

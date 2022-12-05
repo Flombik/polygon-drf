@@ -8,7 +8,7 @@ router.register("providers", views.ProviderViewSet)
 router.register("service-areas", views.ReadOnlyServiceAreaViewSet, basename="service-areas")
 
 provider_router = routers.NestedSimpleRouter(router, "providers", lookup="provider")
-provider_router.register("service-areas", views.ServiceAreaViewSet, basename="provider-service-areas")
+provider_router.register("service-areas", views.ServiceAreaNestedViewSet, basename="provider-service-areas")
 
 urlpatterns = [
     path("", include(router.urls)),
