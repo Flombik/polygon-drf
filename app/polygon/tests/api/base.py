@@ -4,6 +4,8 @@ from http import HTTPStatus
 
 from django.test import TestCase
 
+from polygon.tests.api.utils import urljoin
+
 if t.TYPE_CHECKING:
     from factory import Factory
 
@@ -28,7 +30,7 @@ class BaseAPITestCase(TestCase, ABC):
 class BaseAPIItemTestCase(BaseAPITestCase, ABC):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.factory_class.create()
+        cls.item = cls.factory_class.create()
 
     def validate_item(self, item: dict[str, t.Any]) -> None:
         self.assertIsInstance(item, dict)
@@ -36,6 +38,31 @@ class BaseAPIItemTestCase(BaseAPITestCase, ABC):
 
         for key in self.item_keys:
             self.assertIn(key, item)
+
+    def test_item_get(self):
+        response = self.client.get(urljoin(self.uri, str(self.item.id)))
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+
+        response_data = response.json()
+        self.validate_item(response_data)
+
+    def test_item_put(self):
+        response = self.client.patch(urljoin(self.uri, str(self.item.id)))
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+
+        response_data = response.json()
+        self.validate_item(response_data)
+
+    def test_item_patch(self):
+        response = self.client.patch(urljoin(self.uri, str(self.item.id)))
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+
+        response_data = response.json()
+        self.validate_item(response_data)
+
+    def test_item_delete(self):
+        response = self.client.delete(urljoin(self.uri, str(self.item.id)))
+        self.assertEqual(response.status_code, HTTPStatus.NO_CONTENT)
 
 
 class BaseAPIListTestCase(BaseAPITestCase, ABC):
@@ -80,7 +107,7 @@ class BaseAPIListTestCase(BaseAPITestCase, ABC):
         for item in results:
             self.validate_item(item)
 
-    def test_list_data(self) -> None:
+    def test_list_get(self) -> None:
         response = self.client.get(self.uri, {"page_size": self.batch_size})
         self.assertEqual(response.status_code, HTTPStatus.OK)
 

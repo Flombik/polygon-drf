@@ -1,10 +1,10 @@
-import typing as t
 from http import HTTPStatus
 
 from django.contrib.gis.geos import Point, Polygon, MultiPolygon
 
 from polygon.tests.api.base import BaseAPIListTestCase
 from polygon.tests.factories import ServiceAreaFactory
+from .item import ServiceAreaItemTestCase
 
 
 class ServiceAreaListTestCase(BaseAPIListTestCase):
@@ -12,9 +12,9 @@ class ServiceAreaListTestCase(BaseAPIListTestCase):
 
     factory_class = ServiceAreaFactory
     uri = "/api/service-areas/"
-    item_keys = ("name", "price")
-    properties_key = "properties"
-    feature_keys = ("id", "type", "geometry", properties_key)
+    item_keys = ServiceAreaItemTestCase.item_keys
+    properties_key = ServiceAreaItemTestCase.properties_key
+    feature_keys = ServiceAreaItemTestCase.feature_keys
 
     points_to_expected_length = {
         Point(0, 0): 3,
@@ -71,13 +71,7 @@ class ServiceAreaListTestCase(BaseAPIListTestCase):
         )
         cls.batch_size = 5
 
-    def validate_item(self, item: t.Any) -> None:
-        for key in self.feature_keys:
-            self.assertIn(key, item)
-
-        properties = item[self.properties_key]
-        for key in self.item_keys:
-            self.assertIn(key, properties)
+    validate_item = ServiceAreaItemTestCase.validate_item
 
     def test_list_filtering_with_point(self):
         for point, expected_length in self.points_to_expected_length.items():
@@ -96,3 +90,10 @@ class ServiceAreaListTestCase(BaseAPIListTestCase):
             response_data = response.json()
             features = response_data[self.results_key]
             self.assertEqual(len(features), expected_length)
+
+    def test_list_filtering_with_incorrect_point(self):
+        response = self.client.get(self.uri, {"point": "1"})
+        self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
+
+        response = self.client.get(self.uri, {"point": "1,1,1"})
+        self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
