@@ -1,6 +1,9 @@
+import factory
 from factory import Sequence
 from factory.django import DjangoModelFactory
 from factory.fuzzy import FuzzyDecimal
+
+from .provider import ProviderFactory
 
 
 class ServiceAreaFactory(DjangoModelFactory):
@@ -10,3 +13,4 @@ class ServiceAreaFactory(DjangoModelFactory):
 
     name = Sequence(lambda n: f"ServiceArea #{n+1}")
     price = FuzzyDecimal(0, 9_999_999, 3)
+    provider = factory.SubFactory(ProviderFactory)
