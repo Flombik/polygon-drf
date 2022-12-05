@@ -3,7 +3,6 @@ from abc import ABC, abstractmethod
 from http import HTTPStatus
 
 from django.test import TestCase
-
 from polygon.tests.api.utils import urljoin
 
 if t.TYPE_CHECKING:

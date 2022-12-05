@@ -1,9 +1,9 @@
 from http import HTTPStatus
 
-from django.contrib.gis.geos import Point, Polygon, MultiPolygon
-
+from django.contrib.gis.geos import MultiPolygon, Point, Polygon
 from polygon.tests.api.base import BaseAPIListTestCase
 from polygon.tests.factories import ServiceAreaFactory
+
 from .item import ServiceAreaItemTestCase
 
 

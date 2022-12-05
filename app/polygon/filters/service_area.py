@@ -3,10 +3,9 @@ import typing as t
 from django.contrib.gis.db.models import GeometryField
 from django.contrib.gis.geos import Point
 from django_filters import rest_framework as filters
+from polygon.models import ServiceArea
 from rest_framework.exceptions import ParseError
 from rest_framework_gis import filters as geo_filters
-
-from polygon.models import ServiceArea
 
 if t.TYPE_CHECKING:
     from django.db.models.query import QuerySet

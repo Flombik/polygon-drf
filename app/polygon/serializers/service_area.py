@@ -1,6 +1,5 @@
-from rest_framework_gis.serializers import GeoFeatureModelSerializer
-
 from polygon.models import ServiceArea
+from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 
 class ServiceAreaSerializer(GeoFeatureModelSerializer):

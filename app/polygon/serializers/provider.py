@@ -1,6 +1,5 @@
-from rest_framework import serializers
-
 from polygon.models import Provider
+from rest_framework import serializers
 
 
 class ProviderSerializer(serializers.ModelSerializer):

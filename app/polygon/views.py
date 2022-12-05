@@ -5,8 +5,10 @@ from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework_gis.pagination import GeoJsonPagination
 
 from .filters import service_area as service_area_filters
-from .selectors import provider as provider_selectors, service_area as service_area_selectors
-from .serializers import provider as provider_serializers, service_area as service_area_serializers
+from .selectors import provider as provider_selectors
+from .selectors import service_area as service_area_selectors
+from .serializers import provider as provider_serializers
+from .serializers import service_area as service_area_serializers
 
 
 class ProviderViewSet(ModelViewSet):
