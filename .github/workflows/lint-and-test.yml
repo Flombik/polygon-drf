@@ -50,10 +50,10 @@ jobs:
           cache: 'pip'
 
       - run: sudo apt-get update && sudo apt-get install -y binutils libproj-dev gdal-bin
-      - run: pip install -U pip setuptools wheel
+      - run: pip install -U pip setuptools wheel coverage
       - run: pip install -r requirements.txt
 
-      - run: python manage.py test
+      - run: coverage run --source='.' manage.py test && coverage xml
         working-directory: app
         env:
           DB_HOST: localhost
@@ -61,3 +61,5 @@ jobs:
           DB_NAME: test_db
           DB_USER: test_user
           DB_PASSWORD: test_pass
+
+      - uses: codecov/codecov-action@v3
