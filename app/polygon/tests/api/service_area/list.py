@@ -3,11 +3,11 @@ from http import HTTPStatus
 
 from django.contrib.gis.geos import Point, Polygon, MultiPolygon
 
-from polygon.tests.abstract_classes import AbstractListTestCase
+from polygon.tests.api.base import BaseAPIListTestCase
 from polygon.tests.factories import ServiceAreaFactory
 
 
-class ServiceAreaListTestCase(AbstractListTestCase):
+class ServiceAreaListTestCase(BaseAPIListTestCase):
     results_key = "features"
 
     factory_class = ServiceAreaFactory
@@ -69,8 +69,9 @@ class ServiceAreaListTestCase(AbstractListTestCase):
                 )
             ),
         )
+        cls.batch_size = 5
 
-    def validate_response_results_item(self, item: t.Any) -> None:
+    def validate_item(self, item: t.Any) -> None:
         for key in self.feature_keys:
             self.assertIn(key, item)
 
